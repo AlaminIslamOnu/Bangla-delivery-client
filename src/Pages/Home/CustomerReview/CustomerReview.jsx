@@ -75,7 +75,8 @@ const CustomerReviews = () => {
                       src={review.avatar}
                       alt={review.name}
                       className="w-12 h-12 rounded-full object-cover"
-                      onError={(e) => (e.target.src = "https://via.placeholder.com/48")}
+                      onError={(e) => (e.target.src = "https://placehold.co/48x48")}
+
                     />
                     <div className="text-left">
                       <h4 className="font-bold">{review.name}</h4>

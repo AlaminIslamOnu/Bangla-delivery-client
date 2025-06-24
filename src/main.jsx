@@ -10,6 +10,9 @@ import AuthLayout from "./Layout/AuthLayout";
 import Login from "./Pages/Authentication/login/Login";
 import Register from "./Pages/Authentication/Register";
 import AuthProvider from "./Contexts/AuthProvider";
+import Covarage from "./Pages/Covarage/Covarage";
+import PrivateRoute from "./Route/PrivateRoute";
+import SendParcel from "./Pages/SendParcel/SendParcel";
 
 Aos.init({
   offset: 200,
@@ -27,6 +30,10 @@ const router = createBrowserRouter([
         index: true,
         Component: Home,
       },
+      {
+        path: "/covarage", 
+        Component: Covarage
+      }
     ],
   },
   {
@@ -41,6 +48,10 @@ const router = createBrowserRouter([
         path: "/register",
         Component: Register,
       },
+      {
+        path: '/sendparcel',
+        element: <PrivateRoute><SendParcel></SendParcel></PrivateRoute>}  /* new */
+      
     ],
   },
 ]);

@@ -1,6 +1,8 @@
 import React, { use } from 'react';
 import { useForm } from 'react-hook-form';
 import { Authcontext } from '../../Contexts/Authcontext';
+import { Link } from 'react-router';
+import SocialLogin from './Social Login/SocialLogin';
 
 const Register = () => {
     const {registration}= use(Authcontext)
@@ -45,9 +47,10 @@ const Register = () => {
           {errors.password?.type === 'minLength' && <p className='text-red-600'> 
             Password should be minimum six cheracter or more . use commonsence
             </p>}
-
-          <button className="btn btn-neutral mt-4">Login</button>
+            <p>Already have an account ?<Link to={'/login'}><button className='bg-primary'>Login</button> </Link></p>
+          <button className="btn btn-primary text-black mt-4">Register</button>
         </fieldset>
+        <SocialLogin></SocialLogin>
       </form>
         </div>
     );

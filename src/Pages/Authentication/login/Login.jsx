@@ -1,7 +1,7 @@
-
 import { useForm } from "react-hook-form";
 import UseAuth from "../../../Hooks/UseAuth";
-
+import { Link } from "react-router";
+import SocialLogin from "../Social Login/SocialLogin";
 
 const Login = () => {
     const {singIn} = UseAuth()
@@ -20,6 +20,7 @@ const Login = () => {
 
   return (
     <div>
+      <h2 className="text-4xl text-center font-bold text-primary">Welcome Back</h2>
       <form onSubmit={handleSubmit(onsubmit)}>
         <fieldset className="fieldset">
           <label className="label">Email</label>
@@ -51,9 +52,11 @@ const Login = () => {
                 Minimum password length is six . so put more..
             </p>
           }
-
-          <button className="btn btn-neutral mt-4">Login</button>
+          <p>New this web ? Go <Link to={'/register'}><button className='bg-primary'>Register</button> </Link></p>
+ 
+          <button className="btn btn-primary text-black mt-4">Login</button>
         </fieldset>
+        <SocialLogin></SocialLogin>
       </form>
     </div>
   );
