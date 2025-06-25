@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router";
+import UseAuth from "../../../Hooks/UseAuth";
 
 const Navbar = () => {
+  const {user,logout} =UseAuth()
+  const handleLogout = ()=> {
+      logout()
+  }
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -53,13 +58,20 @@ const Navbar = () => {
           <Link to={'/aboutus'}>
             <p>About us</p>
           </Link>
+          <Link to={'/sendparcel'}>
+            <p>Send Parcel</p>
+          </Link>
 
 
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {
+          user ? <button onClick={handleLogout} className="btn btn-primary text-black">Logout</button>: 
+          <Link to={'/login'}><button className="btn btn-primary text-black">Login</button></Link>
+        }
       </div>
+      
     </div>
   );
 };

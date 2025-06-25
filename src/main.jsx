@@ -33,6 +33,12 @@ const router = createBrowserRouter([
       {
         path: "/covarage", 
         Component: Covarage
+      },
+      {
+        path: '/sendparcel',
+        element: <PrivateRoute>
+          <SendParcel></SendParcel>
+        </PrivateRoute>
       }
     ],
   },
@@ -48,9 +54,7 @@ const router = createBrowserRouter([
         path: "/register",
         Component: Register,
       },
-      {
-        path: '/sendparcel',
-        element: <PrivateRoute><SendParcel></SendParcel></PrivateRoute>}  /* new */
+      
       
     ],
   },
