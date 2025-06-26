@@ -3,10 +3,32 @@ import { Link } from "react-router";
 import UseAuth from "../../../Hooks/UseAuth";
 
 const Navbar = () => {
-  const {user,logout} =UseAuth()
-  const handleLogout = ()=> {
-      logout()
-  }
+  const { user, logout } = UseAuth();
+  const handleLogout = () => {
+    logout();
+  };
+  const links = (
+    <>
+      <Link to={"/"}>
+        <p>Home</p>
+      </Link>
+      <Link to={"/covarage"}>
+        <p>Covarage</p>
+      </Link>
+      <Link to={"/aboutus"}>
+        <p>About us</p>
+      </Link>
+      {user && (
+        <Link to={"/dashboard"}>
+          <p>Dashboard</p>
+        </Link>
+      )}
+
+      <Link to={"/sendparcel"}>
+        <p>Send Parcel</p>
+      </Link>
+    </>
+  );
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -30,48 +52,27 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 gap-2 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-            <li>
-              <a>Home</a>
-            </li>
-
-            <li>
-              <a>About us</a>
-            </li>
-            <li>
-              <a>Covarage</a>
-            </li>
+            {links}
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">ProFast</a>
       </div>
       <div className="navbar-center   hidden lg:flex lg:justify-evenly">
-        <ul className="menu menu-horizontal px-1">
-          
-          <Link to={'/'}>
-            <p>Home</p>
-          </Link>
-          <Link to={'/covarage'}>
-            <p>Covarage</p>
-          </Link>
-          <Link to={'/aboutus'}>
-            <p>About us</p>
-          </Link>
-          <Link to={'/sendparcel'}>
-            <p>Send Parcel</p>
-          </Link>
-
-
-        </ul>
+        <ul className="menu gap-2 menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-        {
-          user ? <button onClick={handleLogout} className="btn btn-primary text-black">Logout</button>: 
-          <Link to={'/login'}><button className="btn btn-primary text-black">Login</button></Link>
-        }
+        {user ? (
+          <button onClick={handleLogout} className="btn btn-primary text-black">
+            Logout
+          </button>
+        ) : (
+          <Link to={"/login"}>
+            <button className="btn btn-primary text-black">Login</button>
+          </Link>
+        )}
       </div>
-      
     </div>
   );
 };

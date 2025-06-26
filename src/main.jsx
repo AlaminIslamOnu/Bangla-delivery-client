@@ -13,6 +13,9 @@ import AuthProvider from "./Contexts/AuthProvider";
 import Covarage from "./Pages/Covarage/Covarage";
 import PrivateRoute from "./Route/PrivateRoute";
 import SendParcel from "./Pages/SendParcel/SendParcel";
+import DashboardLayout from "./Layout/DashboardLayout";
+import MyParcles from "./Pages/Dashboard/MyParcels/MyParcles";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 Aos.init({
   offset: 200,
@@ -31,15 +34,17 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/covarage", 
-        Component: Covarage
+        path: "/covarage",
+        Component: Covarage,
       },
       {
-        path: '/sendparcel',
-        element: <PrivateRoute>
-          <SendParcel></SendParcel>
-        </PrivateRoute>
-      }
+        path: "/sendparcel",
+        element: (
+          <PrivateRoute>
+            <SendParcel></SendParcel>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
@@ -54,16 +59,32 @@ const router = createBrowserRouter([
         path: "/register",
         Component: Register,
       },
-      
-      
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "myparcels",
+        Component: MyParcles,
+      },
     ],
   },
 ]);
 
+const queryClient = new QueryClient()
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>
 );
