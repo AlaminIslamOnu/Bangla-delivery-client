@@ -16,6 +16,7 @@ import SendParcel from "./Pages/SendParcel/SendParcel";
 import DashboardLayout from "./Layout/DashboardLayout";
 import MyParcles from "./Pages/Dashboard/MyParcels/MyParcles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import payment from "./Pages/Dashboard/Payment/payment";
 
 Aos.init({
   offset: 200,
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
         path: "myparcels",
         Component: MyParcles,
       },
+      {
+        path: 'payment/:id',
+        Component: payment
+      }
     ],
   },
 ]);

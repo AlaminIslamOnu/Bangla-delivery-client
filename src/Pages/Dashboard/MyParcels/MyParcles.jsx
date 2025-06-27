@@ -3,6 +3,7 @@ import {  useQuery, useQueryClient } from "@tanstack/react-query";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import UseAuth from "../../../Hooks/UseAuth";
 import Swal from "sweetalert2";
+import { Navigate, useNavigate } from "react-router";
 // import UseAuth from "../../../Hooks/UseAuth";
 
 
@@ -10,6 +11,7 @@ const MyParcels = () => {
   const { user } = UseAuth();
   const axiosSecure = UseAxiosSecure();
   const queryClient = useQueryClient();
+  const navigate =useNavigate()
 
   const { data: parcels = [], isLoading } = useQuery({
     queryKey: ["my-parcels", user?.email],
@@ -44,6 +46,9 @@ const MyParcels = () => {
         }
       }
       
+  }
+  const handlePay =(id)=> {
+     navigate(`/dashboard/payment/${id}`)
   }
   return (
     <div className="p-4">
@@ -83,7 +88,7 @@ const MyParcels = () => {
                 <td className="flex gap-2">
                   <button className="btn btn-sm btn-info">View</button>
                   {parcels.paymentStatus !== "paid" && (
-                    <button className="btn btn-sm btn-warning">Pay</button>
+                    <button onClick={()=>handlePay(parcel._id)} className="btn btn-sm btn-warning">Pay</button>
                   )}
                   <button onClick={()=>handleDelete(parcel._id)} className="btn btn-sm btn-error">Delete</button>
                 </td>
