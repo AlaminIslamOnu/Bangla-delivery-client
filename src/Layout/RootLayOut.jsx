@@ -7,7 +7,9 @@ const RootLayOut = () => {
     return (
         <div className='font-urbanist'>
             <Navbar></Navbar>
-            <Outlet></Outlet>
+            <div className='md:w-[1250px] mx-auto'>
+                <Outlet></Outlet>
+            </div>
             <Footer></Footer>
         </div>
     );
