@@ -1,17 +1,16 @@
 import React from "react";
-import {  useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import UseAuth from "../../../Hooks/UseAuth";
 import Swal from "sweetalert2";
 import { Navigate, useNavigate } from "react-router";
 // import UseAuth from "../../../Hooks/UseAuth";
 
-
 const MyParcels = () => {
   const { user } = UseAuth();
   const axiosSecure = UseAxiosSecure();
   const queryClient = useQueryClient();
-  const navigate =useNavigate()
+  const navigate = useNavigate();
 
   const { data: parcels = [], isLoading } = useQuery({
     queryKey: ["my-parcels", user?.email],
@@ -22,34 +21,58 @@ const MyParcels = () => {
   });
 
   if (isLoading) return <p className="text-center">Loading..</p>;
-  
-  const handleDelete =async(id)=> {
+
+  const handleDelete = async (id) => {
     const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to delete this parcel?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "Cancel",
-      });
-  
-      if (result.isConfirmed) {
-        try {
-          const res = await axiosSecure.delete(`/parcels/${id}`);
-          if (res.data.deletedCount > 0) {
-            Swal.fire("Deleted!", "Parcel deleted successfully.", "success");
-            queryClient.invalidateQueries(["my-parcels", user?.email]);
-          }
-          console.log(res.data);
-        } catch (error) {
-          Swal.fire("Error!", "Failed to delete parcel.", "error");
+      title: "Are you sure?",
+      text: "Do you want to delete this parcel?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+    if (result.isConfirmed) {
+      try {
+        const res=await axiosSecure.delete(`/parcels/${id}`);
+        if (res.data.deletedCount) {
+          Swal.fire("Deleted!", "Parcel deleted successfully.", "success");
+          queryClient.invalidateQueries(["my-parcels", user?.email]);
+          
         }
+      } catch (error) {
+        console.log(error);
       }
-      
-  }
-  const handlePay =(id)=> {
-     navigate(`/dashboard/payment/${id}`)
-  }
+    }
+  };
+
+  // const handleDelete =async(id)=> {
+  //   const result = await Swal.fire({
+  //       title: "Are you sure?",
+  //       text: "Do you want to delete this parcel?",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonText: "Yes, delete it!",
+  //       cancelButtonText: "Cancel",
+  //     });
+
+  //     if (result.isConfirmed) {
+  //       try {
+  //         const res = await axiosSecure.delete(`/parcels/${id}`);
+  //         // console.log(res.data);
+  //         if (res.data.deletedCount) {
+  //           Swal.fire("Deleted!", "Parcel deleted successfully.", "success");
+  //           queryClient.invalidateQueries(["my-parcels", user?.email]);
+  //         }
+  //         // console.log(res.data);
+  //       } catch (error) {
+  //         Swal.fire("Error!", "Failed to delete parcel.", "error");
+  //       }
+  //     }
+
+  // }
+  const handlePay = (id) => {
+    navigate(`/dashboard/payment/${id}`);
+  };
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">📦 My Parcels</h2>
@@ -75,7 +98,7 @@ const MyParcels = () => {
               <tr key={parcel._id}>
                 <td>{index + 1}</td>
                 <td className="capitalize">{parcel.parcelType}</td>
-                <td>{parcel.title || "Not found" }</td>
+                <td>{parcel.title || "Not found"}</td>
                 <td>{parcel.email}</td>
                 <td>{parcel.cost} ৳</td>
                 <td>
@@ -88,9 +111,19 @@ const MyParcels = () => {
                 <td className="flex gap-2">
                   <button className="btn btn-sm btn-info">View</button>
                   {parcels.paymentStatus !== "paid" && (
-                    <button onClick={()=>handlePay(parcel._id)} className="btn btn-sm btn-warning">Pay</button>
+                    <button
+                      onClick={() => handlePay(parcel._id)}
+                      className="btn btn-sm btn-warning"
+                    >
+                      Pay
+                    </button>
                   )}
-                  <button onClick={()=>handleDelete(parcel._id)} className="btn btn-sm btn-error">Delete</button>
+                  <button
+                    onClick={() => handleDelete(parcel._id)}
+                    className="btn btn-sm btn-error"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

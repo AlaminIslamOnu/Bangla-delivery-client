@@ -13,8 +13,8 @@ const SendParcel = () => {
   const axiosSecure = UseAxiosSecure();
   const { user } = UseAuth(); // ✅ Getting user email
 
-  const parcelType = watch("parcelType");
-  const weight = watch("weight");
+  // const parcelType = watch("parcelType");
+  // const weight = watch("weight");
 
   const calculateCost = (type, weight) => {
     const base = type === "non-document" ? 100 : 50;
@@ -34,15 +34,18 @@ const SendParcel = () => {
       deliveryStatus: "processing", // ✅ default status
       creation_date: new Date().toISOString()
     };
+    // console.log(finalData);
 
-    axiosSecure.post("/parcels", finalData).then((res) => {
+
+    axiosSecure.post("/parcels", finalData)
+    .then((res) => {
       if (res.data.insertedId) {
         Swal.fire({
           title: "Your order is received!",
           icon: "success",
           timer: 1500,
         });
-        console.log(res.data);
+        console.log(res.data,finalData);
         reset();
       }
     });
