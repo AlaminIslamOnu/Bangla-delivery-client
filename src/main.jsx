@@ -19,6 +19,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Payment from "./Pages/Dashboard/Payment/payment";
 import PaymentForm from "./Pages/Dashboard/Payment/PaymentForm";
 import PaymentHistory from "./Pages/Dashboard/PaymentHistory/PaymentHistory";
+import BeARider from "./Pages/Dashboard/BeARider/BeARider";
 
 Aos.init({
   offset: 200,
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: '/beARider', element: <PrivateRoute>
+          <BeARider></BeARider>
+        </PrivateRoute>
       },
       {
         path: "/covarage",

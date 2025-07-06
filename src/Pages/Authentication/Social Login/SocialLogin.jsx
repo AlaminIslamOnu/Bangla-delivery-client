@@ -1,20 +1,42 @@
 import React from "react";
 import UseAuth from "../../../Hooks/UseAuth";
 import { useNavigate } from "react-router";
+import UseAxios from "../../../Hooks/UseAxios";
 
 const SocialLogin = () => {
-    const navigate =useNavigate()
-    const {singInWithGoogle}=UseAuth()
+  const navigate = useNavigate();
+  const axiosInstance = UseAxios();
+  const { singInWithGoogle } = UseAuth();
 
-    const handleGoogle = ()=> {
-         singInWithGoogle()
-          navigate('/')
-    }
+  const handleGoogle = () => {
+    singInWithGoogle()
+      .then(async (result) => {
+        const user = result.user;
+        const userInfo = {
+          email: user.email,
+          role: "user" /* default  */,
+          created_at: new Date().toISOString(),
+          last_log_in: new Date().toISOString(),
+        };
+        const userRes = await axiosInstance.post("users", userInfo);
+        console.log("user update info", userRes.data);
+
+        console.log(result);
+        
+        navigate("/");
+      })
+      .cathch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div>
       <h2 className="text-center mt-2">OR</h2>
       <div className="text-center">
-        <button onClick={handleGoogle} className="btn bg-white text-black border-[#e5e5e5]">
+        <button
+          onClick={handleGoogle}
+          className="btn bg-white text-black border-[#e5e5e5]"
+        >
           <svg
             aria-label="Google logo"
             width="16"

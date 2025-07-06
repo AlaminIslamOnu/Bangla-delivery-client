@@ -7,9 +7,9 @@ import { Navigate, useNavigate } from "react-router";
 // import UseAuth from "../../../Hooks/UseAuth";
 
 const MyParcels = () => {
-  const { user } = UseAuth();
+  const { user } = UseAuth(); 
   const axiosSecure = UseAxiosSecure();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { data: parcels = [], isLoading } = useQuery({
@@ -19,7 +19,7 @@ const MyParcels = () => {
       return res.data;
     },
   });
-
+console.log(parcels,isLoading);
   if (isLoading) return <p className="text-center">Loading..</p>;
 
   const handleDelete = async (id) => {

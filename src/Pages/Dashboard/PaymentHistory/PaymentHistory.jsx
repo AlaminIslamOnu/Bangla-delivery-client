@@ -1,15 +1,15 @@
-import React from 'react';
-import UseAuth from '../../../Hooks/UseAuth';
-import { useQuery } from '@tanstack/react-query';
-import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
-import Loading from '../../Shared/Loading/Loading';
+import React from "react";
+import UseAuth from "../../../Hooks/UseAuth";
+import { useQuery } from "@tanstack/react-query";
+import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import Loading from "../../Shared/Loading/Loading";
 
 const PaymentHistory = () => {
   const { user } = UseAuth();
   const axiosSecure = UseAxiosSecure();
 
   const { isLoading, data: payments = [] } = useQuery({
-    queryKey: ['payment-data', user?.email],
+    queryKey: ["payment-data", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/payments?email=${user.email}`);
@@ -21,10 +21,9 @@ const PaymentHistory = () => {
     return <Loading />;
   }
   console.log(payments);
-return (
+  return (
     <div className="p-4">
       <h2 className="text-2xl font-semibold mb-4">My Payment History</h2>
- 
 
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto">
@@ -42,13 +41,12 @@ return (
               <tr key={index} className="hover:bg-gray-50">
                 <td className="px-4 py-2">{index + 1}</td>
                 <td className="px-4 py-2">{item.parcelId}</td>
-                <td className="px-4 py-2"> {item.amount}$
-</td>
+                <td className="px-4 py-2"> {item.amount}$</td>
                 <td className="px-4 py-2">{item.transactionId}</td>
                 <td className="px-4 py-2">
                   {item.paid_at_string
                     ? new Date(item.paid_at_string).toLocaleString()
-                    : 'N/A'}
+                    : "N/A"}
                 </td>
               </tr>
             ))}

@@ -18,6 +18,9 @@ const Navbar = () => {
       <Link to={"/aboutus"}>
         <p>About us</p>
       </Link>
+      <Link to={"/beARider"}>
+        <p>Be a Rider</p>
+      </Link>
       {user && (
         <Link to={"/dashboard"}>
           <p>Dashboard</p>
