@@ -19,6 +19,7 @@ const BeARider = () => {
   const onSubmit = (data) => {
     const riderData = {
       ...data,
+      status: "pending",
       submittedAt: new Date().toISOString(),
     };
     console.log("Rider Submission:", riderData);

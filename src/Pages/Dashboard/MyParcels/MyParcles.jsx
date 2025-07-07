@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import UseAuth from "../../../Hooks/UseAuth";
 import Swal from "sweetalert2";
@@ -12,7 +12,7 @@ const MyParcels = () => {
   // const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { data: parcels = [], isLoading } = useQuery({
+  const { data: parcels = [], isLoading, refetch } = useQuery({
     queryKey: ["my-parcels", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels?email=${user.email}`);
@@ -36,8 +36,8 @@ console.log(parcels,isLoading);
         const res=await axiosSecure.delete(`/parcels/${id}`);
         if (res.data.deletedCount) {
           Swal.fire("Deleted!", "Parcel deleted successfully.", "success");
-          queryClient.invalidateQueries(["my-parcels", user?.email]);
-          
+          // queryClient.invalidateQueries(["my-parcels", user?.email]);
+          refetch()
         }
       } catch (error) {
         console.log(error);

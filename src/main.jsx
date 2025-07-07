@@ -20,6 +20,8 @@ import Payment from "./Pages/Dashboard/Payment/payment";
 import PaymentForm from "./Pages/Dashboard/Payment/PaymentForm";
 import PaymentHistory from "./Pages/Dashboard/PaymentHistory/PaymentHistory";
 import BeARider from "./Pages/Dashboard/BeARider/BeARider";
+import PendingRiders from "./Pages/Dashboard/PendingRiders/PendingRiders";
+import ActiveRider from "./Pages/Dashboard/ActiveRider/ActiveRider";
 
 Aos.init({
   offset: 200,
@@ -89,6 +91,12 @@ const router = createBrowserRouter([
       
       {
         path:'paymenthistory' ,Component: PaymentHistory
+      },
+      {
+        path: 'pendingriders', Component: PendingRiders
+      },
+      {
+        path: "activeriders" , Component: ActiveRider
       }
     ],
   },
