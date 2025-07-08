@@ -8,7 +8,7 @@ import {
   FaShippingFast,
   FaUserEdit,
   FaUsers,
-  FaUserClock,
+  FaUserClock, FaUserShield
 } from "react-icons/fa";
 
 const DashboardLayout = () => {
@@ -96,6 +96,11 @@ const DashboardLayout = () => {
           >
             <FaUserClock />
             <p>Pending Riders</p>
+          </Link>
+
+          <Link to={"/dashboard/makeAdmin"} className="flex items-center gap-2">
+            <FaUserShield />
+            <p>Make Admin</p>
           </Link>
         </ul>
       </div>

@@ -22,6 +22,7 @@ import PaymentHistory from "./Pages/Dashboard/PaymentHistory/PaymentHistory";
 import BeARider from "./Pages/Dashboard/BeARider/BeARider";
 import PendingRiders from "./Pages/Dashboard/PendingRiders/PendingRiders";
 import ActiveRider from "./Pages/Dashboard/ActiveRider/ActiveRider";
+import MakeAdmin from "./Pages/Dashboard/MakeAdmin/MakeAdmin";
 
 Aos.init({
   offset: 200,
@@ -97,6 +98,9 @@ const router = createBrowserRouter([
       },
       {
         path: "activeriders" , Component: ActiveRider
+      },
+      {
+        path: 'makeAdmin', Component: MakeAdmin
       }
     ],
   },
