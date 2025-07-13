@@ -23,6 +23,11 @@ import BeARider from "./Pages/Dashboard/BeARider/BeARider";
 import PendingRiders from "./Pages/Dashboard/PendingRiders/PendingRiders";
 import ActiveRider from "./Pages/Dashboard/ActiveRider/ActiveRider";
 import MakeAdmin from "./Pages/Dashboard/MakeAdmin/MakeAdmin";
+import Forbidden from "./Pages/Forbidden/Forbidden";
+import AdminRoute from "./Route/AdminRoute";
+import AssignRider from "./Pages/Dashboard/AssignRider/AssignRider";
+import RiderRoute from "./Route/RiderRoute";
+import PendingDeliveries from "./Pages/Dashboard/PandingDeliveries/PendingDeliveries";
 
 Aos.init({
   offset: 200,
@@ -41,13 +46,20 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: '/beARider', element: <PrivateRoute>
-          <BeARider></BeARider>
-        </PrivateRoute>
+        path: "/beARider",
+        element: (
+          <PrivateRoute>
+            <BeARider></BeARider>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/covarage",
         Component: Covarage,
+      },
+      {
+        path: "/forbidden",
+        Component: Forbidden,
       },
       {
         path: "/sendparcel",
@@ -86,27 +98,63 @@ const router = createBrowserRouter([
         Component: MyParcles,
       },
       {
-        path: 'payment/:parcelId',
-        Component: Payment
+        path: "payment/:parcelId",
+        Component: Payment,
       },
-      
+
       {
-        path:'paymenthistory' ,Component: PaymentHistory
+        path: "paymenthistory",
+        Component: PaymentHistory,
+      },
+      // Rider route
+      {
+        path: "pendingdeliveries",
+        element: (
+          <RiderRoute>
+            <PendingDeliveries> </PendingDeliveries>
+          </RiderRoute>
+        ),
+      },
+
+      // admin route
+      {
+        path: "pendingriders",
+        element: (
+          <AdminRoute>
+            <PendingRiders></PendingRiders>
+          </AdminRoute>
+        ),
       },
       {
-        path: 'pendingriders', Component: PendingRiders
+        path: "activeriders",
+        element: (
+          <AdminRoute>
+            <ActiveRider></ActiveRider>
+          </AdminRoute>
+        ),
       },
       {
-        path: "activeriders" , Component: ActiveRider
+        path: "makeAdmin",
+
+        element: (
+          <AdminRoute>
+            <MakeAdmin></MakeAdmin>
+          </AdminRoute>
+        ),
       },
       {
-        path: 'makeAdmin', Component: MakeAdmin
-      }
+        path: "assignRider",
+        element: (
+          <AdminRoute>
+            <AssignRider></AssignRider>{" "}
+          </AdminRoute>
+        ),
+      },
     ],
   },
 ]);
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

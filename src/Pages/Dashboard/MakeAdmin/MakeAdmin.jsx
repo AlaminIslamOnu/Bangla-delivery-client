@@ -1,12 +1,13 @@
 import { useState } from "react";
-import useAxiosSecure from "../../../Hooks/UseAxiosSecure";
+
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 
 const MakeAdmin = () => {
   const [searchEmail, setSearchEmail] = useState("");
   const [queryEmail, setQueryEmail] = useState("");
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = UseAxiosSecure();
 
   // ✅ Search users by email
   const { data: users = [], refetch, isFetching } = useQuery({
@@ -41,6 +42,7 @@ const MakeAdmin = () => {
 
   const handleRoleChange = (id, role) => {
     roleMutation.mutate({ id, role });
+    
   };
 
   return (

@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast, Toaster } from "react-hot-toast";
 import regionsData from "../../../public/warehouses.json"; // adjust the path if needed
-import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import Swal from "sweetalert2";
-import UseAuth from "../../Hooks/UseAuth";
+import UseAxiosSecure from "../../Hooks/useAxiosSecure";
+import UseAuth from "../../Hooks/useAuth";
+import { useNavigate } from "react-router";
+
+
  // ✅ Importing user auth
 
 const SendParcel = () => {
-  const { register, handleSubmit, watch, reset } = useForm();
+  const { register, handleSubmit,  reset } = useForm();
   const [showWeight, setShowWeight] = useState(false);
   const axiosSecure = UseAxiosSecure();
   const { user } = UseAuth(); // ✅ Getting user email
+  const naviagte =useNavigate()
 
   // const parcelType = watch("parcelType");
   // const weight = watch("weight");
@@ -51,6 +55,7 @@ const SendParcel = () => {
     });
 
     toast.success(`Delivery Cost: ৳${cost}`);
+    naviagte('/dashboard/myparcels')
   };
 
   return (

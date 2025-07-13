@@ -8,10 +8,16 @@ import {
   FaShippingFast,
   FaUserEdit,
   FaUsers,
-  FaUserClock, FaUserShield
+  FaUserClock,
+  FaUserShield,
+  FaMotorcycle,
+  FaClock,
 } from "react-icons/fa";
+import useUserRole from "../Hooks/useUserRole";
 
 const DashboardLayout = () => {
+  const { role, roleLoading } = useUserRole();
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -81,27 +87,58 @@ const DashboardLayout = () => {
             <FaUserEdit />
             <p>Update Profile</p>
           </Link>
-          {/* Riders links  */}
+          
+          {/* Rider Route  */}
+          {!roleLoading && role === 'rider' && (
+            <>
           <Link
-            to={"/dashboard/activeriders"}
+            to="/dashboard/pendingdeliveries"
             className="flex items-center gap-2"
           >
-            <FaUsers />
-            <p>Active Riders</p>
+            <FaClock />
+            <p>Pending Deliveries</p>
           </Link>
+            
+            </>
+          )}
+          
 
-          <Link
-            to={"/dashboard/pendingriders"}
-            className="flex items-center gap-2"
-          >
-            <FaUserClock />
-            <p>Pending Riders</p>
-          </Link>
+          {/* Admin links  */}
+          {!roleLoading && role === "admin" && (
+            <>
+              <Link
+                to={"/dashboard/assignrider"}
+                className="flex items-center gap-2"
+              >
+                <FaMotorcycle />
+                <p>Assign Rider</p>
+              </Link>
 
-          <Link to={"/dashboard/makeAdmin"} className="flex items-center gap-2">
-            <FaUserShield />
-            <p>Make Admin</p>
-          </Link>
+              <Link
+                to={"/dashboard/activeriders"}
+                className="flex items-center gap-2"
+              >
+                <FaUsers />
+                <p>Active Riders</p>
+              </Link>
+
+              <Link
+                to={"/dashboard/pendingriders"}
+                className="flex items-center gap-2"
+              >
+                <FaUserClock />
+                <p>Pending Riders</p>
+              </Link>
+
+              <Link
+                to={"/dashboard/makeAdmin"}
+                className="flex items-center gap-2"
+              >
+                <FaUserShield />
+                <p>Make Admin</p>
+              </Link>
+            </>
+          )}
         </ul>
       </div>
     </div>
