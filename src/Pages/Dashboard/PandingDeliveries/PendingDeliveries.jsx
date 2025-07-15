@@ -15,7 +15,7 @@ const PendingDeliveries = () => {
     // Load parcels assigned to the current rider
     const { data: parcels = [], isLoading } = useQuery({
         queryKey: ["riderParcels"],
-        enabled: !!user?.email,
+        enabled: !!user?.email, 
         queryFn: async () => {
             const res = await axiosSecure.get(`/rider/parcels?email=${user.email}`);
             return res.data;
@@ -28,6 +28,7 @@ const PendingDeliveries = () => {
             const res = await axiosSecure.patch(`/parcels/${parcel._id}/status`, {
                 status,
             });
+            console.log(status);
             return res.data;
         },
         onSuccess: () => {
@@ -96,12 +97,12 @@ const PendingDeliveries = () => {
                                     <td>{parcel.tracking_id}</td>
                                     <td>{parcel.title}</td>
                                     <td>{parcel.type}</td>
-                                    <td>{parcel.receiver_name}</td>
-                                    <td>{parcel.receiver_center}</td>
+                                    <td>{parcel.receiverName}</td>
+                                    <td>{parcel.receiverCenter}</td>
                                     <td>৳{parcel.cost}</td>
-                                    <td className="capitalize">{parcel.delivery_status.replace("_", " ")}</td>
+                                    <td className="capitalize">{parcel.deliveryStatus.replace("_", " ")}</td>
                                     <td>
-                                        {parcel.delivery_status === "rider_assigned" && (
+                                        {parcel.deliveryStatus === "rider_assigned" && (
                                             <button
                                                 className="btn btn-sm btn-primary text-black"
                                                 onClick={() =>
@@ -111,7 +112,7 @@ const PendingDeliveries = () => {
                                                 Mark Picked Up
                                             </button>
                                         )}
-                                        {parcel.delivery_status === "in_transit" && (
+                                        {parcel.deliveryStatus === "in_transit" && (
                                             <button
                                                 className="btn btn-sm btn-success text-black"
                                                 onClick={() =>

@@ -28,6 +28,7 @@ import AdminRoute from "./Route/AdminRoute";
 import AssignRider from "./Pages/Dashboard/AssignRider/AssignRider";
 import RiderRoute from "./Route/RiderRoute";
 import PendingDeliveries from "./Pages/Dashboard/PandingDeliveries/PendingDeliveries";
+import CompletedDeliveries from "./Pages/Dashboard/CompletedDelivery/CompletedDeliveries";
 
 Aos.init({
   offset: 200,
@@ -114,6 +115,12 @@ const router = createBrowserRouter([
             <PendingDeliveries> </PendingDeliveries>
           </RiderRoute>
         ),
+      },
+      {
+path: 'completedDeliveries' , 
+element: <RiderRoute>
+ <CompletedDeliveries></CompletedDeliveries>  
+</RiderRoute>
       },
 
       // admin route
