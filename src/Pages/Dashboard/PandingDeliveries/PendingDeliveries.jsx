@@ -1,21 +1,21 @@
 import React from 'react';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import Swal from 'sweetalert2';
-// import useTrackingLogger from '../../../hooks/useTrackingLogger';
-import UseAxiosSecure from '../../../Hooks/useAxiosSecure';
-import UseAuth from '../../../Hooks/UseAuth';
-import Loading from '../../Shared/Loading/Loading';
+import useTrackingLogger from '../../../hooks/useTrackingLogger';
+import UseAuth from '../../../hooks/UseAuth';
 
 const PendingDeliveries = () => {
-    const axiosSecure = UseAxiosSecure();
+    const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
-    // const { logTracking } = useTrackingLogger();
+    const { logTracking } = useTrackingLogger();
     const { user } = UseAuth();
 
     // Load parcels assigned to the current rider
     const { data: parcels = [], isLoading } = useQuery({
         queryKey: ["riderParcels"],
-        enabled: !!user?.email, 
+        enabled: !!user?.email,
         queryFn: async () => {
             const res = await axiosSecure.get(`/rider/parcels?email=${user.email}`);
             return res.data;
@@ -28,7 +28,6 @@ const PendingDeliveries = () => {
             const res = await axiosSecure.patch(`/parcels/${parcel._id}/status`, {
                 status,
             });
-            console.log(status);
             return res.data;
         },
         onSuccess: () => {
@@ -50,16 +49,16 @@ const PendingDeliveries = () => {
                         Swal.fire("Updated!", "Parcel status updated.", "success");
 
                         // log tracking
-                        // let trackDetails = `Picked up by ${user.displayName}`
-                        // if (newStatus === 'delivered') {
-                        //     trackDetails = `Delivered by ${user.displayName}`
-                        // }
-                        // await logTracking({
-                        //         tracking_id: parcel.tracking_id,
-                        //         status: newStatus,
-                        //         details: trackDetails,
-                        //         updated_by: user.email,
-                        //     });
+                        let trackDetails = `Picked up by ${user.displayName}`
+                        if (newStatus === 'delivered') {
+                            trackDetails = `Delivered by ${user.displayName}`
+                        }
+                        await logTracking({
+                                tracking_id: parcel.tracking_id,
+                                status: newStatus,
+                                details: trackDetails,
+                                updated_by: user.email,
+                            });
 
                     })
                     .catch(() => {
@@ -73,7 +72,7 @@ const PendingDeliveries = () => {
         <div className="p-6">
             <h2 className="text-2xl font-bold mb-4">Pending Deliveries</h2>
             {isLoading ? (
-                <Loading> </Loading>
+                <p>Loading...</p>
             ) : parcels.length === 0 ? (
                 <p className="text-gray-500">No assigned deliveries.</p>
             ) : (
@@ -97,8 +96,8 @@ const PendingDeliveries = () => {
                                     <td>{parcel.tracking_id}</td>
                                     <td>{parcel.title}</td>
                                     <td>{parcel.type}</td>
-                                    <td>{parcel.receiverName}</td>
-                                    <td>{parcel.receiverCenter}</td>
+                                    <td>{parcel.receiver_name}</td>
+                                    <td>{parcel.receiver_center}</td>
                                     <td>৳{parcel.cost}</td>
                                     <td className="capitalize">{parcel.deliveryStatus.replace("_", " ")}</td>
                                     <td>

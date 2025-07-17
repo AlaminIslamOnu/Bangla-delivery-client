@@ -13,6 +13,7 @@ import {
   FaMotorcycle,
   FaClock,
   FaCheckCircle,
+  FaMoneyBillWave,
 } from "react-icons/fa";
 import useUserRole from "../Hooks/useUserRole";
 
@@ -105,6 +106,13 @@ const DashboardLayout = () => {
               >
                 <FaCheckCircle />
                 <p>Completed Deliveries</p>
+              </Link>
+              <Link
+                to="/dashboard/myEarning"
+                className="flex items-center gap-2"
+              >
+                <FaMoneyBillWave />
+                <p>My Earning</p>
               </Link>
             </>
           )}

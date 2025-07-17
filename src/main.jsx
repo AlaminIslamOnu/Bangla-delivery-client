@@ -29,6 +29,7 @@ import AssignRider from "./Pages/Dashboard/AssignRider/AssignRider";
 import RiderRoute from "./Route/RiderRoute";
 import PendingDeliveries from "./Pages/Dashboard/PandingDeliveries/PendingDeliveries";
 import CompletedDeliveries from "./Pages/Dashboard/CompletedDelivery/CompletedDeliveries";
+import MyEarnings from "./Pages/Dashboard/MyEarning/MyEarning";
 
 Aos.init({
   offset: 200,
@@ -66,9 +67,11 @@ const router = createBrowserRouter([
         path: "/sendparcel",
         element: (
           <PrivateRoute>
-            <SendParcel></SendParcel>
+            <SendParcel></SendParcel>,
+            
           </PrivateRoute>
         ),
+        loader: () => fetch('../public/warehouses.json')
       },
     ],
   },
@@ -120,6 +123,12 @@ const router = createBrowserRouter([
 path: 'completedDeliveries' , 
 element: <RiderRoute>
  <CompletedDeliveries></CompletedDeliveries>  
+</RiderRoute>
+      },
+      {
+path: 'myEarning' , element: 
+<RiderRoute> 
+  <MyEarnings></MyEarnings>
 </RiderRoute>
       },
 
